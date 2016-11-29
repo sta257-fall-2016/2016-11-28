@@ -20,7 +20,7 @@ header-includes:
 
 ## key point from end of last class, restated
 
-I did: $X_1,\ldots,X_n$ i.i.d. implies \E{\overline X} = \mu.$
+I did: $X_1,\ldots,X_n$ i.i.d. implies $\E{\overline X} = \mu.$
 
 A different (better?) approach could have started with a more fundamental:
 $$\E{\sum\limits_{i=1}^n X_i} = \sum\limits_{i=1}^n \E{X_i}$$
@@ -195,18 +195,85 @@ Considering the sum and absolute difference:
 
 ![](xy.PNG)
 
-## conditional expectation { .build }
+## more on two dice { .smaller }
 
-$E(X_2|X_1=x_1)$ is a function of $X_1$ and can be considered a random variable in its own right.
+(Done on board in class.)
 
-This *random variable* is called "the conditional expectation of X_2 given X_1" or $E(X_2|X_1)$
+It is easy to calculate the expected value of $X_2|X_1 = x_1$ for each $x_1 \in \{2,3,4,5,6,7,8,9,10,11,12\}$ (the $\|$ is there instead of $|$ because of a formatting issue):
 
-What is interesting is to consider the expected value of this random variable.
+$x_1$|2|3|4|5|6|7|8|9|10|11|12
+-----|---|---|---|---|---|---|---|---|---|---|---
+$E(X_2\|X_1=x_1)$ |0|1|4/3|2|12/5|3|12/5|2|4/3|1|0
 
-Theorem: $E(E(X|Y)) = E(X)$
+&nbsp;
 
-Proof:...
+You can associate each $E(X_2\|X_1=x_1)$ with the probability $P(X_1=x_1)$ itself to define a *new random variable* that has the following probability mass function:
 
+Probability: |1/36|2/36|3/36|4/36|5/36|6/36|5/36|4/36|3/36|2/36|1/36
+-----|---|---|---|---|---|---|---|---|---|---|---
+Outcome: |0|1|4/3|2|12/5|3|12/5|2|4/3|1|0
 
+&nbsp;
 
+The random variable with this p.m.f has a (confusing!) name: *the conditional expectation of $X_2$ given $X_1$* or in notation: $E(X_2|X_1).$
+
+Despite its confusing name, it's just a random variable. 
+
+## a little more on two dice
+
+(Not done explicitly in class.)
+
+It is easy to use the pmf on the previous page to show that the expected value of this odd new random variable is 35/18.
+
+You can also go back to page 8 of the *spooky* 2016-10-31 notes and find the marginal pmf for $X_2$ and use that to calculate $E(X_2).$ You will find that this is also 35/18.
+
+This is not a coincidence. 
+
+## more cond. exp. not done in class { .smaller }
+
+Let's build up to this apparently mysterious $E(X|Y)$ thing.
+
+**Start with:** Any random variable $Y$. 
+
+**Then consider:** Any other random variable $X$. The conditional distribution of $X$ given $Y=y$ can be characterized by (say) the conditional density $\f{X|Y}(x|y)$ and the expected value of this conditional distribuion is just:
+$$E(X|Y=y)=\int\limits_{-\infty}^{\infty} x\,\f{X|Y}(x|y)\,dx.$$
+
+**Define a function $g:\mathbb{R}\to\mathbb{R}$:** by considering another random variable $X$ and defining $g(y) = E(X|Y=y)$ 
+
+**Define a *new* random variable:** $W = g(Y)$ 
+
+**Give $W$ a confusing name, because why not:** Call $W$ the "conditional expectation of $X$ given $Y$" or $E(X|Y)$. It is *not* an expected value (i.e. a constant); it is a random variable, with a distribution etc.
+
+## interesting property not done in class { .smaller }
+
+Since $g(Y) = E(X|Y)$ is a random variable we might be interested in some of the properties of its distribution. 
+
+One interesting property is its expected value.
+
+$$\begin{align*}
+E(E(X|Y)) = E(g(Y)) &= \int\limits_{-\infty}^\infty g(y)\f{Y}(y)\,dy\\
+&= \int\limits_{-\infty}^\infty \left[\int\limits_{-\infty}^{\infty} x\,\f{X|Y}(x|y)\,dx\right]\f{Y}(y)\,dy\\
+&=\int\limits_{-\infty}^\infty \left[\int\limits_{-\infty}^{\infty} x\,\frac{f(x,y)}{\f{Y}(y)}\,dx\right]\f{Y}(y)\,dy\end{align*}$$
+(continued...)
+
+## ...from previous { .smaller }
+
+$$\begin{align*}
+E(E(X|Y)) &= \int\limits_{-\infty}^\infty \left[\int\limits_{-\infty}^{\infty} x\,\frac{f(x,y)}{\f{Y}(y)}\,dx\right]\f{Y}(y)\,dy\\
+&=\int\limits_{-\infty}^\infty\int\limits_{-\infty}^{\infty} x\,\frac{f(x,y)}{\f{Y}(y)}\f{Y}(y)\,dy\,dx \qquad \text{(change order of integration)}\\
+&=\int\limits_{-\infty}^\infty x \int\limits_{-\infty}^{\infty} f(x,y)\,dy\,dx\\
+&=\int\limits_{-\infty}^\infty x \f{X}(x)\,dx\\
+&= E(X)\end{align*}$$
+
+## covariance, correlation, conditional expectation in context
+
+(not done in class...)
+
+These topics are not central to this course, so I have given them only the briefest of introductions.
+
+They will re-appear possibly in STA261 but definitely in things like regression, experimental design, sampling theory, and other areas of applied statistics.
+
+Covariance and correlation also have empirical analogues when analyzing actual datasets. 
+
+Conditional expectation also plays an important theoretical role in advanced probability theory and in things like stochastic processes.
 
